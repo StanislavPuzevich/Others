@@ -34,7 +34,7 @@ int main()
                    .open = [&latest_user_id](auto* ws)
                     {
                         //что делать при подключении пользователя
-                        UserConnection* data = ws->getUserData(); //*******ПОПРОБУЙ УБРАТЬ ПРИВЕДЕНИЕ!********
+                        UserConnection* data = ws->getUserData();
                         data->user_id = latest_user_id++;
                         std::cout << "New user connected, ID: " << data->user_id << std::endl;
                         ws->subscribe("broadcast"); // каждого пользователя подключаем к каналу broadcast
@@ -46,14 +46,13 @@ int main()
                         UserConnection* data = ws->getUserData();
                         std::cout << "New Message " << message << ", User ID = " << data->user_id << std::endl;
                         auto beginning = message.substr(0, 8);
-                        //if (beginning.compare("SET_NAME") == 0);
                         if (beginning == "SET_NAME") //пользователь прислал своё имя
                         {
                             auto name = message.substr(11);
                             data->user_name = new std::string(name);
                             std::cout << "User set their name ID = " << data->user_id << " Name = " << *data->user_name << std::endl;
                             std::string broadcast_message = format("NEW_USER:,{},{}", name, data->user_id);
-                            ws->publish("broadcast", broadcast_message, opCode, false);//всех пользователец канала broadcast оповещаем о подключении нового пользователя
+                            ws->publish("broadcast", broadcast_message, opCode, false);//всех пользователей канала broadcast оповещаем о подключении нового пользователя
                         }
                         auto is_message_t0 = message.substr(0, 11);
                         if (is_message_t0 == "MESSAGE_TO")
