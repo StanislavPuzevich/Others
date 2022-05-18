@@ -1,4 +1,4 @@
-//This program works with *ppm files and changes the color of the image depending on the user's choice.
+//This program works with  *ppm files and changes the color of the image depending on the user's choice.
 
 #include "Header.h"                                                   
 
